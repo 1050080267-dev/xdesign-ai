@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String
+  name      String
+  theme    String?
+  thumbnail String?
+  frames Frame[]
+  members     ProjectMember[] 
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Frame {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  title    String
+  htmlContent String
+  projectId  String
+  project Project @relation(fields: [projectId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ProjectMember {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  projectId String   @db.ObjectId
+  userId    String
+  email     String
+  name      String?
+  avatar    String?
+  role      String   @default("viewer") // "editor" | "viewer"
+  project   Project  @relation(fields: [projectId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model EditLog {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  frameId   String   @db.ObjectId
+  projectId String   @db.ObjectId
+  userId    String
+  userName  String
+  action    String   // "text" | "image" | "icon"
+  element   String   // mô tả element được sửa
+  selector  String?
+  oldValue  String?  // giá trị cũ
+  newValue  String   // giá trị mới
+  createdAt DateTime @default(now())
+}

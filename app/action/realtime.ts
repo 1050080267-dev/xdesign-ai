@@ -1,0 +1,25 @@
+"use server";
+
+import { inngest } from "@/inngest/client";
+import { getSubscriptionToken } from "@inngest/realtime";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+
+export async function fetchRealtimeSubscriptionToken() {
+  const session = await getKindeServerSession();
+  const user = await session.getUser();
+
+  if (!user) throw new Error("Unauthorized");
+  console.log("userId từ Kinde (realtime.ts):", user.id); // THÊM DÒNG NÀY
+  const token = await getSubscriptionToken(inngest, {
+    channel: `user:${user.id}`,  // ✅ bắt buộc phải có
+    topics: [
+      "generation.start",
+      "analysis.start",
+      "analysis.complete",
+      "frame.created",
+      "generation.complete",
+    ],
+  });
+
+  return token;
+}
