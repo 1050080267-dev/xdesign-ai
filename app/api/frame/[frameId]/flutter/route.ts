@@ -4,6 +4,9 @@ import prisma from "@/lib/prisma";
 import { generateText } from "ai";
 import { openrouter } from "@/lib/openrouter";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function POST(
     req: NextRequest,
     { params }: { params: Promise<{ frameId: string }> }
@@ -14,7 +17,10 @@ export async function POST(
         const user = await session.getUser();
         if (!user) throw new Error("Unauthorized");
 
-        // Lấy frame từ DB
+        // 👇 Đọc htmlContent từ body nếu có
+        const body = await req.json().catch(() => ({}));
+        const htmlFromBody = body.htmlContent;
+
         const frame = await prisma.frame.findFirst({
             where: { id: frameId },
             include: { project: true },
@@ -24,40 +30,12 @@ export async function POST(
             return NextResponse.json({ error: "Frame not found" }, { status: 404 });
         }
 
-        // Gọi Gemini convert HTML → Flutter
-        //         const result = await generateText({
-        //             model: openrouter.chat("google/gemini-2.5-flash-lite-preview-09-2025"),
-        //             system: `You are an expert Flutter/Dart developer. 
-        // Your job is to convert HTML/CSS mobile UI to Flutter Dart code.
-
-        // RULES:
-        // 1. Output ONLY valid Dart code, no markdown, no explanation
-        // 2. Create a complete StatelessWidget or StatefulWidget
-        // 3. Use Flutter Material widgets (Container, Column, Row, Stack, ListView, etc.)
-        // 4. Convert Tailwind colors to Flutter Colors or hex colors
-        // 5. Convert CSS flexbox to Flutter Row/Column
-        // 6. Convert CSS grid to Flutter GridView
-        // 7. Use proper Flutter padding, margin, decoration
-        // 8. Include all imports at the top
-        // 9. Widget class name should match the screen title
-        // 10. Make it pixel-perfect matching the HTML design
-        // 11. For images use Image.network() with the same URLs
-        // 12. For icons use Icons.* from material library
-        // 13. Output must be a complete runnable Flutter widget`,
-
-        //             prompt: `Convert this HTML mobile UI screen to Flutter Dart code.
-        // Screen Title: ${frame.title}
-        // HTML Content:
-        // ${frame.htmlContent}
-
-        // Generate complete Flutter widget code now.`,
-        //         });
+        // 👇 Ưu tiên HTML từ frontend, fallback về DB
+        const finalHtml = htmlFromBody || frame.htmlContent;
 
         const result = await generateText({
-            model: openrouter.chat(
-                "google/gemini-2.5-flash-lite-preview-09-2025"
-            ),
-            maxOutputTokens: 4000, // 👈 giảm xuống 4000 là đủ cho 1 màn hình Flutter
+            model: openrouter.chat("google/gemini-2.5-pro"),
+            maxOutputTokens: 16000,
             system: `
 You are a senior Flutter engineer.
 
@@ -130,7 +108,6 @@ SafeArea
 
 - Return complete runnable code only
 `,
-
             prompt: `
 Convert this mobile UI into Flutter.
 
@@ -138,7 +115,7 @@ Screen title:
 ${frame.title}
 
 HTML:
-${frame.htmlContent}
+${finalHtml}
 
 Generate valid runnable Flutter code.
 `,

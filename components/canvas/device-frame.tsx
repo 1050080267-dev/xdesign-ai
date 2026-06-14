@@ -579,33 +579,70 @@ const DeviceFrame = ({
     }
   }, [frameSize, isExportingSvg, title, fullHtml]);
 
+  // const handleExportFlutter = useCallback(() => {
+  //   if (isExportingFlutter) return;
+  //   setIsExportingFlutter(true);
+  //   toast.info("Đang tạo Flutter code, vui lòng chờ...");
+  //   exportFlutter(frameId, {
+  //     onSuccess: (data) => {
+  //       const blob = new Blob([data.data.dartCode], {
+  //         type: "text/plain;charset=utf-8",
+  //       });
+  //       const url = URL.createObjectURL(blob);
+  //       const link = document.createElement("a");
+  //       link.href = url;
+  //       link.download = data.data.fileName;
+  //       document.body.appendChild(link);
+  //       link.click();
+  //       document.body.removeChild(link);
+  //       URL.revokeObjectURL(url);
+  //       toast.success("Đã xuất Flutter code!");
+  //     },
+  //     onError: () => {
+  //       toast.error("Xuất Flutter thất bại!");
+  //     },
+  //     onSettled: () => {
+  //       setIsExportingFlutter(false);
+  //     },
+  //   });
+  // }, [frameId, exportFlutter, isExportingFlutter]);
+
   const handleExportFlutter = useCallback(() => {
     if (isExportingFlutter) return;
+
+    // Lấy HTML hiện tại từ iframe thay vì từ prop
+    const iframe = iframeRef.current;
+    const doc = iframe?.contentDocument;
+    const currentHtml = doc?.getElementById("root")?.innerHTML 
+        || doc?.body?.innerHTML 
+        || html; // fallback về prop nếu không lấy được
+
     setIsExportingFlutter(true);
     toast.info("Đang tạo Flutter code, vui lòng chờ...");
-    exportFlutter(frameId, {
-      onSuccess: (data) => {
-        const blob = new Blob([data.data.dartCode], {
-          type: "text/plain;charset=utf-8",
-        });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = data.data.fileName;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
-        toast.success("Đã xuất Flutter code!");
-      },
-      onError: () => {
-        toast.error("Xuất Flutter thất bại!");
-      },
-      onSettled: () => {
-        setIsExportingFlutter(false);
-      },
+    
+    exportFlutter({ frameId, htmlContent: currentHtml }, {  // ← truyền object thay vì string
+        onSuccess: (data) => {
+            const blob = new Blob([data.data.dartCode], {
+                type: "text/plain;charset=utf-8",
+            });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = data.data.fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            toast.success("Đã xuất Flutter code!");
+        },
+        onError: () => {
+            toast.error("Xuất Flutter thất bại!");
+        },
+        onSettled: () => {
+            setIsExportingFlutter(false);
+        },
     });
-  }, [frameId, exportFlutter, isExportingFlutter]);
+}, [frameId, exportFlutter, isExportingFlutter, html]);
 
   return (
     <Rnd

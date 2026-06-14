@@ -189,10 +189,21 @@ export const useUpdateMemberRole = (projectId: string) => {
     });
 };
 
+// export const useExportFlutter = () => {
+//     return useMutation({
+//         mutationFn: async (frameId: string) =>
+//             await axios.post(`/api/frame/${frameId}/flutter`)
+//                 .then(res => res.data),
+//         onError: () => {
+//             toast.error("Xuất Flutter thất bại!");
+//         },
+//     });
+// };
+
 export const useExportFlutter = () => {
     return useMutation({
-        mutationFn: async (frameId: string) =>
-            await axios.post(`/api/frame/${frameId}/flutter`)
+        mutationFn: async ({ frameId, htmlContent }: { frameId: string; htmlContent: string }) =>
+            await axios.post(`/api/frame/${frameId}/flutter`, { htmlContent })
                 .then(res => res.data),
         onError: () => {
             toast.error("Xuất Flutter thất bại!");

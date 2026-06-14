@@ -12,7 +12,7 @@ export async function generateProjectName(prompt: string) {
             // model: google('gemini-2.0-flash-001'),
             // Bỏ comment dòng này
         // model: openrouter.chat("google/gemini-2.5-flash-lite"),
-        model: openrouter.chat("google/gemini-2.5-flash-lite-preview-09-2025"),
+        model: openrouter.chat("google/gemini-2.5-pro"),
           maxOutputTokens: 100, // 👈 thêm dòng này
             system: `
           You are an AI assistant that generates very very short project names based on the user's prompt.

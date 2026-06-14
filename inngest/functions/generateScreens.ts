@@ -342,7 +342,7 @@ export const generateScreens = inngest.createFunction(
         : `USER REQUEST: ${prompt}`.trim();
 
       const { object } = await generateObject({
-        model: openrouter.chat("google/gemini-2.5-flash-lite-preview-09-2025"),
+        model: openrouter.chat("google/gemini-2.5-pro"),
         schema: AnalysisSchema,
         system: ANALYSIS_PROMPT,
         prompt: analysisPrompt,
@@ -384,7 +384,7 @@ export const generateScreens = inngest.createFunction(
       // Chạy bước tạo HTML cho từng màn hình
       const resultFrame = await step.run(`generated-screen-${i}`, async () => {
         const result = await generateText({
-          model: openrouter.chat("google/gemini-2.5-flash-lite-preview-09-2025"),
+          model: openrouter.chat("google/gemini-2.5-pro"),
           system: GENERATION_SYSTEM_PROMPT,
           maxOutputTokens: 5000,
           tools: { searchUnsplash: unsplashTool },
