@@ -4,44 +4,6 @@ import { NextResponse } from "next/server";
 import { generateProjectName } from "@/app/action/action";
 import { inngest } from "@/inngest/client";
 
-// export async function GET(request: Request) {
-//   try {
-//     const session = await getKindeServerSession();
-//     const user = await session.getUser();
-//     if (!user) throw new Error("Unauthorized");
-
-//     const { searchParams } = new URL(request.url);
-//     const search = searchParams.get("search") || "";
-
-
-//     const projects = await prisma.project.findMany({
-//     where: {
-//         OR: [
-//             { userId: user.id },
-//             {
-//                 members: {
-//                     some: {
-//                         OR: [
-//                             { email: user.email as string },
-//                             { userId: user.id },
-//                         ]
-//                     }
-//                 }
-//             }
-//         ]
-//     },
-//     orderBy: { createdAt: "desc" },
-// });
-
-//     return NextResponse.json({ success: true, data: projects });
-//   } catch (error) {
-//     console.log("Error occured ", error);
-//     return NextResponse.json(
-//       { error: "Failed to fetch project" },
-//       { status: 500 }
-//     );
-//   }
-// }
 
 export async function GET(request: Request) {
     try {

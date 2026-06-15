@@ -50,7 +50,7 @@ export async function POST(
                 userName,
                 action,
                 element,
-                selector: selector || null, // ✅ giờ selector đã được khai báo
+                selector: selector || null, //  giờ selector đã được khai báo
                 oldValue,
                 newValue,
             }

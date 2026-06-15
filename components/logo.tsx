@@ -8,13 +8,6 @@ const Logo = () => {
      gap-2 text-2xl
     "
     >
-        {/* <span 
-        className="inline-block
-        font-extrabold text-primary"
-        >
-            x
-        </span>
-        <span className="font-semibold text-foreground">design.ai</span> */}
         <span className="inline-block font-black text-transparent bg-clip-text bg-gradient-to-tr from-primary to-violet-500 text-2xl scale-110 motion-safe:hover:scale-125 transition-transform duration-200">
     x
   </span>

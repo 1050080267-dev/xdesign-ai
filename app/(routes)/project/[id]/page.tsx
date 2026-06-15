@@ -64,7 +64,7 @@ const Page = () => {
     if (isPending || isAuthPending) {
         return (
             <div className="h-screen w-full flex items-center justify-center">
-                Loading project...
+                Đang tải dự án...
             </div>
         );
     }

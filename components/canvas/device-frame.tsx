@@ -96,21 +96,6 @@ const DeviceFrame = ({
     return () => window.removeEventListener("open-icon-picker", handleOpenIconPicker);
   }, [frameId]);
 
-  // const getElementSelector = useCallback((el: HTMLElement): string => {
-  //   if (el.id) return `#${el.id}`;
-  //   let selector = el.tagName.toLowerCase();
-  //   if (el.className && typeof el.className === "string") {
-  //     const classes = el.className.trim().split(/\s+/).slice(0, 2).join(".");
-  //     if (classes) selector += `.${classes}`;
-  //   }
-  //   const parent = el.parentElement;
-  //   if (parent) {
-  //     const siblings = Array.from(parent.children);
-  //     const index = siblings.indexOf(el) + 1;
-  //     selector += `:nth-child(${index})`;
-  //   }
-  //   return selector;
-  // }, []);
 
   const getElementSelector = useCallback((el: HTMLElement): string => {
     let editId = el.getAttribute("data-edit-id");
@@ -278,27 +263,6 @@ const DeviceFrame = ({
         const input = doc.createElement("input");
         input.type = "file";
         input.accept = "image/*";
-        // input.onchange = () => {
-        //   const file = input.files?.[0];
-        //   if (!file) return;
-        //   const reader = new FileReader();
-        //   reader.onloadend = () => {
-        //     img.src = reader.result as string;
-        //     img.style.outline = "2px dashed #f59e0b";
-        //     img.style.boxShadow = "";
-        //     addEditLog({
-        //       projectId,
-        //       action: "image",
-        //       element: `Ảnh "${img.alt || "không tên"}"`,
-        //       selector: getElementSelector(img),
-        //       oldValue: oldSrc.substring(0, 50) + "...",
-        //       newValue: `Ảnh mới: ${file.name}`,
-        //     });
-        //     toast.success("Đã đổi ảnh!");
-        //   };
-        //   reader.readAsDataURL(file);
-        // };
-
         input.onchange = async () => {
           const file = input.files?.[0];
           if (!file) return;
@@ -514,10 +478,10 @@ const DeviceFrame = ({
       link.download = `${title.replace(/\s+/g, "-").toLowerCase()}-${Date.now()}.png`;
       link.click();
       window.URL.revokeObjectURL(url);
-      toast.success("Screenshot downloaded");
+      toast.success("Đã tải ảnh chụp màn hình xuống");
     } catch (error) {
       console.error(error);
-      toast.error("Failed to screenshot");
+      toast.error("Không thể chụp ảnh màn hình");
     } finally {
       setIsDownloading(false);
     }
@@ -579,34 +543,7 @@ const DeviceFrame = ({
     }
   }, [frameSize, isExportingSvg, title, fullHtml]);
 
-  // const handleExportFlutter = useCallback(() => {
-  //   if (isExportingFlutter) return;
-  //   setIsExportingFlutter(true);
-  //   toast.info("Đang tạo Flutter code, vui lòng chờ...");
-  //   exportFlutter(frameId, {
-  //     onSuccess: (data) => {
-  //       const blob = new Blob([data.data.dartCode], {
-  //         type: "text/plain;charset=utf-8",
-  //       });
-  //       const url = URL.createObjectURL(blob);
-  //       const link = document.createElement("a");
-  //       link.href = url;
-  //       link.download = data.data.fileName;
-  //       document.body.appendChild(link);
-  //       link.click();
-  //       document.body.removeChild(link);
-  //       URL.revokeObjectURL(url);
-  //       toast.success("Đã xuất Flutter code!");
-  //     },
-  //     onError: () => {
-  //       toast.error("Xuất Flutter thất bại!");
-  //     },
-  //     onSettled: () => {
-  //       setIsExportingFlutter(false);
-  //     },
-  //   });
-  // }, [frameId, exportFlutter, isExportingFlutter]);
-
+  
   const handleExportFlutter = useCallback(() => {
     if (isExportingFlutter) return;
 
@@ -757,3 +694,4 @@ const Handle = () => (
 );
 
 export default DeviceFrame;
+

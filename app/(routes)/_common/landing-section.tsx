@@ -32,8 +32,6 @@ const LandingSection = () => {
     const [search, setSearch] = useState<string>("");
     const userId = user?.id;
 
-    // Dùng useSearchProjects thay useGetProjects để hỗ trợ search
-    // const { data: projects, isLoading, isError } = useSearchProjects(userId, search);
 
     const {
         data: projects,

@@ -23,17 +23,6 @@ export const useCreateProject = () => {
 };
 
 
-// export const useGetProjects = (userId?: string) => {
-//     return useQuery({
-//         queryKey:["projects"],
-//         queryFn: async () => {
-//           const res = await axios.get("/api/project");
-//           return res.data.data;
-//         },
-//         enabled: !! userId,
-//     });
-// };
-
 export const useGetProjects = (userId?: string) => {
     return useQuery({
         queryKey: ["projects"],
@@ -84,16 +73,6 @@ export const useRenameProject = () => {
     });
 };
 
-// export const useSearchProjects = (userId?: string, search?: string) => {
-//     return useQuery({
-//         queryKey: ["projects", search],
-//         queryFn: async () => {
-//             const res = await axios.get(`/api/project?search=${search || ""}`);
-//             return res.data.data;
-//         },
-//         enabled: !!userId,
-//     });
-// };
 
 export const useSearchProjects = (
     userId?: string,
@@ -189,16 +168,6 @@ export const useUpdateMemberRole = (projectId: string) => {
     });
 };
 
-// export const useExportFlutter = () => {
-//     return useMutation({
-//         mutationFn: async (frameId: string) =>
-//             await axios.post(`/api/frame/${frameId}/flutter`)
-//                 .then(res => res.data),
-//         onError: () => {
-//             toast.error("Xuất Flutter thất bại!");
-//         },
-//     });
-// };
 
 export const useExportFlutter = () => {
     return useMutation({
@@ -211,20 +180,6 @@ export const useExportFlutter = () => {
     });
 };
 
-// export const useDeleteFrame = () => {
-//     const queryClient = useQueryClient();
-//     return useMutation({
-//         mutationFn: async (frameId: string) =>
-//             await axios.delete(`/api/frame/${frameId}`).then(res => res.data),
-//         onSuccess: () => {
-//             queryClient.invalidateQueries({ queryKey: ["projects"] });
-//             toast.success("Đã xóa giao diện!");
-//         },
-//         onError: () => {
-//             toast.error("Xóa giao diện thất bại!");
-//         },
-//     });
-// };
 
 export const useDeleteFrame = () => {
     const queryClient = useQueryClient();

@@ -33,14 +33,14 @@ export const CanvasProvider = ({
     initialThemeId,
     hasInitialData,
     projectId,
-    userId, // 🔥 BƯỚC 1: Nhận thêm userId từ Component cha truyền vào
+    userId, 
 }: {
     children: ReactNode;
     initialFrames: FrameType[];
     initialThemeId?: string;
     hasInitialData: boolean;
     projectId: string | null;
-    userId: string; // 🔥 Khai báo kiểu dữ liệu cho userId
+    userId: string; 
 }) => {
     const [themeId, setThemeId] = useState<string>(
         initialThemeId || THEME_LIST[0].id
@@ -139,29 +139,6 @@ export const CanvasProvider = ({
         });
     }, [projectId, freshData]);
 
-    // useEffect(() => {
-    //     if (initialFrames && !isGeneratingRef.current) {
-    //         setFrames(initialFrames);
-    //     }
-    // }, [initialFrames]);
-
-    //     useEffect(() => {
-    //     if (!initialFrames) return;
-
-    //     setFrames((prev) => {
-    //         const existingIds = new Set(prev.map((f) => f.id));
-
-    //         const mergedFrames = [...prev];
-
-    //         initialFrames.forEach((frame) => {
-    //             if (!existingIds.has(frame.id)) {
-    //                 mergedFrames.push(frame);
-    //             }
-    //         });
-
-    //         return mergedFrames;
-    //     });
-    // }, [initialFrames]);
 
     useEffect(() => {
         if (!initialFrames) return;

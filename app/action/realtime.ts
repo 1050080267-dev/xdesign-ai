@@ -9,9 +9,9 @@ export async function fetchRealtimeSubscriptionToken() {
   const user = await session.getUser();
 
   if (!user) throw new Error("Unauthorized");
-  console.log("userId từ Kinde (realtime.ts):", user.id); // THÊM DÒNG NÀY
+  console.log("userId từ Kinde (realtime.ts):", user.id); 
   const token = await getSubscriptionToken(inngest, {
-    channel: `user:${user.id}`,  // ✅ bắt buộc phải có
+    channel: `user:${user.id}`,  
     topics: [
       "generation.start",
       "analysis.start",

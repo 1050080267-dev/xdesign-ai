@@ -1,43 +1,7 @@
-// import { useQuery } from "@tanstack/react-query";
-// import axios from "axios";
-
-// export const useGetProjectById = (projectId: string) => {
-//     return useQuery({
-//         queryKey: ["project", projectId],
-//         queryFn: async () => {
-//             const res = await axios.get(`/api/project/${projectId}`);
-//             return res.data;
-//         },
-//         enabled: !!projectId,
-//     });
-// };
-
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
 
-// export const useGetProjectById = (projectId: string) => {
-//     return useQuery({
-//         queryKey: ["project", projectId],
-//         queryFn: async () => {
-//             const res = await axios.get(`/api/project/${projectId}`);
-//             return res.data;
-//         },
-//         enabled: !!projectId,
-//         // Sửa lỗi ở đây: destruct lấy { state } từ query
-//         refetchInterval: (query) => {
-//             const data = query.state.data as any; // Ép kiểu any để truy cập nhanh các thuộc tính
-
-//             // Nếu đã có frames (AI đã làm xong) thì dừng refetch (false)
-//             // Nếu chưa có frames hoặc mảng trống thì cứ 3 giây refetch 1 lần
-//             if (data?.frames && data.frames.length > 0) {
-//                 return false;
-//             }
-//             return 3000;
-//         },
-//         refetchOnWindowFocus: true,
-//     });
-// };
 
 export const useGetProjectById = (projectId: string) => {
     return useQuery({
