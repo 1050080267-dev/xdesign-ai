@@ -35,7 +35,8 @@ export async function POST(
 
         const result = await generateText({
             model: openrouter.chat("google/gemini-2.5-pro"),
-            maxOutputTokens: 16000,
+            // maxOutputTokens: 16000,
+            maxOutputTokens: 12000,
             system: `
 You are a senior Flutter engineer.
 

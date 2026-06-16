@@ -44,32 +44,32 @@ const LandingSection = () => {
         {
             label: "Quản lý tài chính",
             icon: "💸",
-            value: '"Màn hình thống kê ứng dụng tài chính. Số dư hiện tại ở trên cùng với số tiền Đô-la, biểu đồ cột hiển thị chi tiêu qua các tháng (Tháng 10 - Tháng 3) với các nút chọn tháng dạng viên thuốc ở phía dưới, danh sách giao dịch có icon ứng dụng, số tiền và danh mục. Thanh điều hướng phía dưới. Ứng dụng di động, giao diện một màn hình. Phong cách: Chế độ sáng, đậm nét và nhiều màu sắc. Nền xám đậm/gần như đen, không đổ màu gradient, các thẻ bo góc dày dặn, vui nhộn nhưng chuyên nghiệp, phông chữ sans-serif hiện đại, phong cách fintech Gen Z. Thú vị và tươi mới, không mang tính công sở gò bó."',
+            value: 'Hãy tạo giao diện ứng dụng di động quản lý chi tiêu cá nhân, bao gồm 2 giao diện: giao diện trang đăng nhập và giao diện trang chủ.',
         },
         {
-            label: "Theo dõi vận động",
-            icon: "🔥",
-            value: 'Màn hình tóm tắt hoạt động thể chất và theo dõi sức khỏe. Vòng tiến trình tròn lớn ở trung tâm hiển thị số bước chân và calo với hiệu ứng phát sáng neon. Biểu đồ đường hiển thị nhịp tim theo thời gian. Phần phía dưới là lưới các chỉ số sức khỏe (Giấc ngủ, Nước, SpO2). Ứng dụng di động, giao diện một màn hình. Phong cách: Chế độ tối sâu (Tối ưu cho màn hình OLED). Nền đen tuyền với các điểm nhấn màu xanh neon điện tử và màu xanh dương rực rỡ. Độ tương phản cao, nhiều dữ liệu nhưng được sắp xếp gọn gàng, thẩm mỹ bóng bẩy và mang phong cách thể thao.',
+            label: "Ứng dụng Chat App",
+            icon: "💬",
+            value: 'Hãy tạo giao diện ứng dụng di động Chat App hiện đại, bao gồm 2 giao diện: giao diện trang đăng nhập và giao diện trang chủ.',
         },
         {
-            label: "Đặt món & Giao hàng",
+            label: "Quản lý công việc",
+            icon: "✅",
+            value: 'Hãy tạo giao diện ứng dụng di động quản lý công việc, bao gồm 2 giao diện: giao diện trang đăng nhập và giao diện trang chủ.',
+        },
+        {
+            label: "Ứng dụng đặt đồ ăn",
             icon: "🍔",
-            value: 'Trang chủ ứng dụng giao đồ ăn. Thanh tìm kiếm trên cùng đi kèm ghim vị trí. Banner quảng cáo ưu đãi hàng ngày dạng trượt ngang (carousel). Danh sách nhà hàng xếp theo chiều dọc với ảnh thu nhỏ món ăn lớn nhìn ngon mắt, huy hiệu hiển thị thời gian giao hàng và sao đánh giá. Nút hành động nổi (FAB) cho giỏ hàng. Ứng dụng di động, giao diện một màn hình. Phong cách: Rực rỡ và Kích thích vị giác. Tông màu ấm (cam, đỏ, vàng), các góc thẻ bo tròn, đổ bóng mờ nhẹ để tạo chiều sâu. Giao diện thân thiện và lôi cuốn.',
+            value: 'Hãy tạo giao diện ứng dụng di động đặt đồ ăn, bao gồm 2 giao diện: giao diện trang đăng nhập và giao diện trang chủ.',
         },
         {
-            label: "Đặt chỗ du lịch",
-            icon: "✈️",
-            value: 'Màn hình chi tiết điểm đến du lịch. Ảnh chụp toàn màn hình tràn viền sống động về một bãi biển nhiệt đới. Một bảng kéo từ dưới lên (bottom sheet) che phủ phần dưới với các góc trên bo tròn, chứa tên khách sạn, xếp hạng sao, giá mỗi đêm và một nút (Đặt ngay lớn). Danh sách trượt ngang của các biểu tượng tiện ích. Ứng dụng di động, giao diện một màn hình. Phong cách: Sang trọng Tối giản. Nhiều khoảng trắng thoáng đãng, phông chữ serif thanh lịch cho tiêu đề, phông chữ sans-serif tinh gọn cho văn bản chính. Mang phong cách du lịch cao cấp, tinh tế và phóng khoáng.',
+            label: "Ứng dụng ghi chú",
+            icon: "📝",
+            value: 'Tạo giao diện ứng dụng di động ghi chú, bao gồm 2 giao diện: giao diện trang đăng nhập và giao diện trang chủ.',
         },
         {
-            label: "Thương mại điện tử (giày)",
-            icon: "👟",
-            value: 'Trang sản phẩm giày sneaker. Ảnh sản phẩm lớn chất lượng cao trên nền xám nhạt. Các ô chọn màu sắc (color swatches), lưới chọn kích cỡ (size grid), và một nút cố định "Thêm vào giỏ hàng" ở dưới đáy màn hình. Tiêu đề và giá tiền sử dụng phông chữ đậm, kích thước siêu lớn (oversized). Ứng dụng di động, giao diện một màn hình. Phong cách: Neo-Brutalism (Tân thô bạo). Độ tương phản cao, viền đen dày trên các nút bấm và thẻ, đổ bóng cứng (không làm mờ/blur), hình khối góc cạnh thô sơ, màu sắc nguyên bản đậm nét (vàng và đen). Mang thẩm mỹ thời trang đường phố (streetwear) thời thượng.',
-        },
-        {
-            label: "Sức khỏe tinh thần",
-            icon: "🧘",
-            value: 'Màn hình trình phát nhạc thiền. Điểm nhấn trung tâm là hiệu ứng hoạt ảnh bong bóng hơi thở trừu tượng, nhẹ nhàng. Các nút điều khiển Phát/Tạm dừng và thanh trượt thời gian ở phía dưới. Nền ứng dụng là màu xanh xô thơm pastel (sage green) dịu mát. Ứng dụng di động, giao diện một màn hình. Phong cách: Tối giản Mềm mại (Soft Minimal). Mọi thành phần đều được bo góc tròn, văn bản có độ tương phản thấp giúp thư giãn mắt, bảng màu pastel, giao diện cực kỳ tinh gọn không rối mắt. Mang bầu không khí Zen (Thiền), bình yên và có tính trị liệu.',
+            label: "Ứng dụng xem thời tiết",
+            icon: "☀️",
+            value: 'Hãy tạo giao diện ứng dụng di động xem thời tiết, bao gồm 2 giao diện: giao diện trang đăng nhập và giao diện trang chủ.',
         },
     ];
 
@@ -84,6 +84,22 @@ const LandingSection = () => {
 
     return (
         <div className="w-full min-h-screen">
+            {isPending && (
+                <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-background/80 backdrop-blur-sm">
+                    <div className="flex flex-col items-center gap-4">
+                        <div className="relative">
+                            <div className="size-16 rounded-full border-4 border-primary/20 border-t-primary animate-spin" />
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="size-8 rounded-full border-4 border-primary/10 border-t-primary/60 animate-spin [animation-direction:reverse]" />
+                            </div>
+                        </div>
+                        <div className="flex flex-col items-center gap-1">
+                            <p className="text-lg font-semibold text-foreground">Đang tạo giao diện...</p>
+                            <p className="text-sm text-muted-foreground">AI đang xử lý yêu cầu của bạn</p>
+                        </div>
+                    </div>
+                </div>
+            )}
             <div className="flex flex-col">
                 <Header />
                 <div className="relative overflow-hidden pt-28">
@@ -177,6 +193,7 @@ const LandingSection = () => {
                 </div>
             </div>
         </div>
+
     );
 };
 

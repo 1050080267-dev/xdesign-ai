@@ -41,31 +41,31 @@ const Canvas = ({
       ? loadingStatus
       : null;
 
-     const saveThumbnailToProject = useCallback(  
-      async (projectId: string | null) => {
-    try {
-      if (!projectId) return null;
-      const result = getCanvasHtmlContent();
-      if (!result?.html) return null;
-      setSelectedFrameId(null);
-      const response = await axios.post(
-        "/api/screenshot",
-        {
-          html: result.html,
-          width: result.element.scrollWidth,
-          height: 700,
-          projectId,
-        },
-            );
-            if (response.data) {
-              console.log("Thumbnail saved", response.data)
-            }
-    } catch (error) {
-      console.log(error);
-    }
-  }, 
-  [setSelectedFrameId]
-);
+  const saveThumbnailToProject = useCallback(
+    async (projectId: string | null) => {
+      try {
+        if (!projectId) return null;
+        const result = getCanvasHtmlContent();
+        if (!result?.html) return null;
+        setSelectedFrameId(null);
+        const response = await axios.post(
+          "/api/screenshot",
+          {
+            html: result.html,
+            width: result.element.scrollWidth,
+            height: 700,
+            projectId,
+          },
+        );
+        if (response.data) {
+          console.log("Thumbnail saved", response.data)
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [setSelectedFrameId]
+  );
 
   // useEffect(() => {
   //   if (!projectId) return;
@@ -96,13 +96,25 @@ const Canvas = ({
   useEffect(() => {
     // Log ra để xem nó có bao giờ chạm được vào mức "completed" không
     console.log("Check loadingStatus trước khi save:", loadingStatus);
-    
-    if (projectId && loadingStatus === "completed") {
-        console.log("🎯 Bắt đầu lưu thumbnail...");
-        saveThumbnailToProject(projectId);
-    }
-}, [loadingStatus, projectId, saveThumbnailToProject]);
 
+    if (projectId && loadingStatus === "completed") {
+      console.log("🎯 Bắt đầu lưu thumbnail...");
+      saveThumbnailToProject(projectId);
+    }
+  }, [loadingStatus, projectId, saveThumbnailToProject]);
+
+  // ← THÊM VÀO ĐÂY, ngay bên dưới useEffect trên
+  const hasToastedRef = useRef(false);
+
+  useEffect(() => {
+    if (loadingStatus === "completed" && !hasToastedRef.current) {
+      hasToastedRef.current = true;
+      toast.success("Đã tạo giao diện thành công! 🎉");
+    }
+    if (loadingStatus === "idle") {
+      hasToastedRef.current = false;
+    }
+  }, [loadingStatus]);
 
   const onOpenHtmlDialog = () => {
     setOpenHtmlDialog(true);
@@ -155,19 +167,19 @@ const Canvas = ({
           height: 700,
         },
         {
-                    responseType: "blob",
-                    validateStatus: (s) => (s >= 200 && s < 300) || s === 304,
-                }
-            );
-            const title = projectName || "Canvas";
-            const url = window.URL.createObjectURL(response.data);
-            const link = document.createElement("a");
-            link.href = url;
-            link.download = `${title.replace(/\s+/g, "-").toLowerCase()}
+          responseType: "blob",
+          validateStatus: (s) => (s >= 200 && s < 300) || s === 304,
+        }
+      );
+      const title = projectName || "Canvas";
+      const url = window.URL.createObjectURL(response.data);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${title.replace(/\s+/g, "-").toLowerCase()}
             -${Date.now()}.png`;
-            link.click();
-            window.URL.revokeObjectURL(url);
-            toast.success("Đã tải ảnh chụp màn hình xuống");
+      link.click();
+      window.URL.revokeObjectURL(url);
+      toast.success("Đã tải ảnh chụp màn hình xuống");
     } catch (error) {
       console.log(error);
       toast.error("Không thể chụp ảnh màn hình")
@@ -269,7 +281,7 @@ const Canvas = ({
                         toolMode={toolMode}
                         theme_style={theme?.style}
                         onOpenHtmlDialog={onOpenHtmlDialog}
-                        canEdit={canEdit} 
+                        canEdit={canEdit}
                       />
                     )
                   })}</div>
@@ -299,24 +311,51 @@ const Canvas = ({
   );
 };
 
+// function CanvasLoader({ status }: { status?: LoadingStatusType | "fetching" }) {
+//   return <div className={cn(
+//     `absolute top-4 left-1/2 -translate-x-1/2 min-w-40
+//         max-w-full px-4 pt-1.5 pb-2
+//         rounded-br-xl rounded-bl-xl shadow-md
+//         flex items-center space-x-2 z-50
+//         `,
+//     status === "fetching" && "bg-gray-500 text-white",
+//     status === "running" && "bg-amber-500 text-white",
+//     status === "analyzing" && "bg-blue-500 text-white",
+//     status === "generating" && "bg-purple-500 text-white",
+//   )}>
+//     <Spinner className="w-4 h-4 stroke-3!" />
+//     <span className="text-sm font-semibold capitalize">
+//       {status === "fetching" ? "Loading Project" : status}
+//     </span>
+//   </div>;
+
+// }
+
 function CanvasLoader({ status }: { status?: LoadingStatusType | "fetching" }) {
-  return <div className={cn(
-    `absolute top-4 left-1/2 -translate-x-1/2 min-w-40
+  const statusText: Record<string, string> = {
+    fetching: "Đang tải dự án...",
+    running: "Đang khởi động...",
+    analyzing: "Đang phân tích yêu cầu...",
+    generating: "Đang tạo giao diện...",
+  };
+
+  return (
+    <div className={cn(
+      `absolute top-4 left-1/2 -translate-x-1/2 min-w-40
         max-w-full px-4 pt-1.5 pb-2
         rounded-br-xl rounded-bl-xl shadow-md
-        flex items-center space-x-2 z-50
-        `,
-    status === "fetching" && "bg-gray-500 text-white",
-    status === "running" && "bg-amber-500 text-white",
-    status === "analyzing" && "bg-blue-500 text-white",
-    status === "generating" && "bg-purple-500 text-white",
-  )}>
-    <Spinner className="w-4 h-4 stroke-3!" />
-    <span className="text-sm font-semibold capitalize">
-      {status === "fetching" ? "Loading Project" : status}
-    </span>
-  </div>;
-
+        flex items-center space-x-2 z-50`,
+      status === "fetching" && "bg-gray-500 text-white",
+      status === "running" && "bg-amber-500 text-white",
+      status === "analyzing" && "bg-blue-500 text-white",
+      status === "generating" && "bg-purple-500 text-white",
+    )}>
+      <Spinner className="w-4 h-4 stroke-3!" />
+      <span className="text-sm font-semibold">
+        {statusText[status || ""] || status}
+      </span>
+    </div>
+  );
 }
 
 export default Canvas;

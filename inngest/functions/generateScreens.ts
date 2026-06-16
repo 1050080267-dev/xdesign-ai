@@ -52,12 +52,13 @@ export const generateScreens = inngest.createFunction(
         : `USER REQUEST: ${prompt}`.trim();
 
       const { object } = await generateObject({
-        model: openrouter.chat("google/gemini-2.5-pro"),
+        model: openrouter.chat("google/gemini-2.5-flash"),
         schema: AnalysisSchema,
         system: ANALYSIS_PROMPT,
         prompt: analysisPrompt,
         //có thể xóa
-        maxOutputTokens: 3500,
+        // maxOutputTokens: 12000,
+        maxOutputTokens: 6000,
       });
 
       const themeToUse = isExistingGeneration ? existingTheme : object.theme;
@@ -96,7 +97,8 @@ export const generateScreens = inngest.createFunction(
         const result = await generateText({
           model: openrouter.chat("google/gemini-2.5-pro"),
           system: GENERATION_SYSTEM_PROMPT,
-          maxOutputTokens: 5000,
+          // maxOutputTokens: 12000,
+          maxOutputTokens: 6000,
           tools: { searchUnsplash: unsplashTool },
           stopWhen: stepCountIs(5),
           prompt: `
